@@ -39,7 +39,7 @@ Target a specific agent only:
 
 ```bash
 npx skills add hqman/xhs-video --agent claude-code
-npx skills add hqman/xhs-video --agent cursor
+npx skills add hqman/xhs-video --agent codex
 ```
 
 Install globally (user-level, all projects):
@@ -142,7 +142,7 @@ npx skills add hqman/xhs-video
 
 ```bash
 npx skills add hqman/xhs-video --agent claude-code
-npx skills add hqman/xhs-video --agent cursor
+npx skills add hqman/xhs-video --agent codex
 ```
 
 全局安装（用户级，所有项目共用）：
