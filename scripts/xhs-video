@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+install_hint() {
+  local tool="$1"
+  local os
+  os="$(uname -s)"
+  case "$os" in
+    Darwin)
+      echo "  brew install $tool"
+      ;;
+    Linux)
+      if [[ "$tool" == "node" ]]; then
+        echo "  sudo apt install -y nodejs   # Debian/Ubuntu"
+        echo "  sudo dnf install -y nodejs   # Fedora"
+        echo "  sudo pacman -S nodejs        # Arch"
+      else
+        echo "  sudo apt install -y $tool    # Debian/Ubuntu"
+        echo "  sudo dnf install -y $tool    # Fedora"
+        echo "  sudo pacman -S $tool         # Arch"
+      fi
+      ;;
+    *)
+      if [[ "$tool" == "node" ]]; then
+        echo "  winget install OpenJS.NodeJS"
+      else
+        echo "  winget install $tool"
+      fi
+      ;;
+  esac
+}
+
+require() {
+  local tool="$1"
+  if ! command -v "$tool" >/dev/null 2>&1; then
+    echo "Error: '$tool' is not installed or not on PATH." >&2
+    echo "Install it with:" >&2
+    install_hint "$tool" >&2
+    exit 127
+  fi
+}
+
+require node
+
+exec node "$SCRIPT_DIR/xhs-video.mjs" "$@"
